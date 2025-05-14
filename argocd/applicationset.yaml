@@ -4,6 +4,7 @@ metadata:
   name: environments-appset
   namespace: argocd
 spec:
+  goTemplate: true
   generators:
     - list:
         elements:
@@ -16,9 +17,9 @@ spec:
       finalizers:
         - resources-finalizer.argocd.argoproj.io/background
     spec:
-      project: environments-project
+      project: k3s-environments
       source:
-        repoURL: git@github.com:leogues/infra.git
+        repoURL: git@github.com:leogues/k3s-gitops.git
         targetRevision: HEAD
         path: envs/{{.env}}
         directory:

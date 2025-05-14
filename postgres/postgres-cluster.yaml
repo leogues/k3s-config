@@ -1,0 +1,22 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+  namespace: database
+spec:
+  instances: 1
+  storage:
+    size: 1Gi
+
+  superuserSecret:
+    name: postgres-secret
+
+  bootstrap:
+    initdb:
+      database: postgres
+      owner: root
+      secret:
+        name: postgres-secret
+      postInitSQL:
+        - CREATE SCHEMA IF NOT EXISTS webrtc AUTHORIZATION root;
+        - CREATE SCHEMA IF NOT EXISTS musichub AUTHORIZATION root;
