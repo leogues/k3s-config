@@ -1,0 +1,6 @@
+---
+image:
+  tag: "v0.16.0"
+
+metrics:
+  enabled: true

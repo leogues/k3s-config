@@ -1,0 +1,7 @@
+[submodule "k3s-secrets"]
+  path = k3s-secrets
+  url = git@github.com:leogues/k3s-secrets.git
+
+[submodule "k3s-gitops"]
+  path = k3s-gitops
+  url = git@github.com:leogues/k3s-gitops.git
