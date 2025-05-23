@@ -8,14 +8,13 @@ cluster:
   storage:
     size: 1Gi
 
-  superuserSecret: postgres-secret
+  superuserSecret: superuser-secret
 
-  bootstrap:
-    initdb:
-      database: postgres
-      owner: root
-      secret:
-        name: postgres-secret
-      postInitSQL:
-        - CREATE SCHEMA IF NOT EXISTS webrtc AUTHORIZATION root;
-        - CREATE SCHEMA IF NOT EXISTS musichub AUTHORIZATION root;
+  initdb:
+    database: postgres
+    owner: dev
+    secret:
+      name: user-secret
+    postInitSQL:
+      - CREATE SCHEMA IF NOT EXISTS webrtc AUTHORIZATION dev;
+      - CREATE SCHEMA IF NOT EXISTS musichub AUTHORIZATION dev;

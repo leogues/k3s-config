@@ -8,4 +8,6 @@ resource "helm_release" "updater" {
   version    = "0.12.1"
 
   values = [file("values/image-updater.yaml")]
+
+  depends_on = [helm_release.argocd]
 }

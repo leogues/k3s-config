@@ -5,7 +5,8 @@ resource "helm_release" "argocd" {
 
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
-  version    = "7.8.28"
+  version    = "8.0.9"
 
   values = [file("values/argocd.yaml")]
+
 }
