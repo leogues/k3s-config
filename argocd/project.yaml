@@ -9,7 +9,7 @@ metadata:
 spec:
   description: Projeto de gerenciamento GitOps dos ambientes dev e prod no cluster K3s
   sourceRepos:
-    - git@github.com:leogues/k3s-gitops.git
+    - https://github.com/leogues/k3s-gitops.git
   destinations:
     - namespace: "*"
       server: https://kubernetes.default.svc

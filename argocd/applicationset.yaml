@@ -18,7 +18,7 @@ spec:
     spec:
       project: k3s-environments
       source:
-        repoURL: git@github.com:leogues/k3s-gitops.git
+        repoURL: https://github.com/leogues/k3s-gitops.git
         targetRevision: HEAD
         path: envs/{{.env}}
         directory:
