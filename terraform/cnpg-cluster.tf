@@ -8,6 +8,4 @@ resource "helm_release" "postgres_cluster" {
   version    = "0.3.1"
 
   values = [file("values/cnpg-cluster.yaml")]
-
-  depends_on = [helm_release.cnpg_operator]
 }

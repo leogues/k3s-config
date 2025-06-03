@@ -8,6 +8,11 @@ cluster:
   storage:
     size: 1Gi
 
+  monitoring:
+    enabled: true
+    podMonitor:
+      enabled: true
+
   superuserSecret: superuser-secret
 
   initdb:

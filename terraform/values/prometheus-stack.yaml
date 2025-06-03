@@ -1,0 +1,82 @@
+alertmanager:
+  alertmanagerSpec:
+    replicas: 1
+    retentions: 120h
+
+    resources: {}
+
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes: 
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 5Gi
+
+grafana:
+
+  adminUser: ''
+  adminPassword: ''
+  
+  initChownData:
+    enabled: false
+
+  resources: {}
+
+  persistence:
+    enabled: true
+    accessModes: 
+      - ReadWriteOnce
+    size: 6Gi
+    finalizers:
+      - kubernetes.io/pvc-protection
+
+  ingress: 
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+    hosts: 
+      - grafana.leogues.com.br
+    tls:
+      - secretName: traefik-cert-secret
+        hosts:
+          - grafana.leogues.com.br
+
+  additionalDataSources:
+    - name: "Mimir"
+      uid: mimir
+      type: prometheus
+      access: proxy
+      isDefault: false
+      url: http://mimir-nginx.monitoring.svc/prometheus
+      jsonData:
+        tlsSkipVerify: true
+        timeInterval: 30s
+
+prometheus:
+  agentMode: true
+
+  prometheusSpec:
+    replicas: 1
+    # retentions: 10d
+
+    resources: {}
+
+    podMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+
+    remoteWrite:
+      - name: 'mimir'
+        url: 'http://mimir-nginx.monitoring.svc/api/v1/push'
+
+    # storageSpec:
+    #   volumeClaimTemplate:
+    #     spec:
+    #       accessModes: 
+    #         - ReadWriteOnce
+    #       resources:
+    #         requests:
+    #           storage: 8Gi

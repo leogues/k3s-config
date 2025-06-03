@@ -1,3 +1,6 @@
 ---
 config:
   clusterWide: true
+
+monitoring:
+  podMonitorEnabled: true

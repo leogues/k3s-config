@@ -8,5 +8,4 @@ resource "helm_release" "argocd" {
   version    = "8.0.9"
 
   values = [file("values/argocd.yaml")]
-
 }

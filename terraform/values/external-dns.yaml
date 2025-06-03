@@ -11,6 +11,8 @@ env:
 sources:
   - ingress
 
+policy: sync
+
 extraArgs:
   - --cloudflare-proxied
   - --cloudflare-dns-records-per-page=5000
