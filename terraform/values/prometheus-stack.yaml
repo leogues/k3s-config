@@ -24,6 +24,15 @@ grafana:
 
   resources: {}
 
+  sidecar:
+    dashboards:
+      folderAnnotation: grafana_folder
+
+      provider:
+        allowUiUpdates: true
+        foldersFromFilesStructure: true
+
+
   persistence:
     enabled: true
     accessModes: 
