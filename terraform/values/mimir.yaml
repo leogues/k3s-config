@@ -27,7 +27,7 @@ mimir:
         secret_access_key: "${R2_SECRET_ACCESS_KEY}"
         bucket_name: "mimir"
     compactor:
-      compaction_interval: 24h
+      compaction_interval: 2h
     query_scheduler:
       max_outstanding_requests_per_tenant: 10000
 ingester:

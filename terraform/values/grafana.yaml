@@ -1,0 +1,55 @@
+adminUser: ""
+adminPassword: ""
+
+initChownData:
+  enabled: false
+
+resources: {}
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Mimir
+        uid: mimir
+        type: prometheus
+        access: proxy
+        url: http://mimir-nginx.monitoring.svc/prometheus
+        isDefault: true
+        jsonData:
+          tlsSkipVerify: true
+          timeInterval: 30s
+
+sidecar:
+  dashboards:
+    enabled: true
+    folderAnnotation: grafana_folder
+    annotations:
+      grafana_folder: "Monitoring"
+    provider:
+      allowUiUpdates: true
+      foldersFromFilesStructure: true
+
+  datasources:
+    enabled: true
+    label: grafana_datasource
+
+persistence:
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  size: 6Gi
+  finalizers:
+    - kubernetes.io/pvc-protection
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: cloudflare-clusterissuer
+  hosts:
+    - grafana.leogues.com.br
+  tls:
+    - secretName: traefik-cert-secret
+      hosts:
+        - grafana.leogues.com.br

@@ -1,0 +1,22 @@
+cluster:
+  name: k8s-monitoring
+
+destinations:
+  - name: mimir
+    type: prometheus
+    url: http://mimir-nginx.monitoring.svc/api/v1/push
+
+clusterMetrics:
+  enabled: true
+  destinations:
+    - mimir
+
+prometheusOperatorObjects:
+  enabled: true
+  destinations:
+    - mimir
+  crds:
+    deploy: true
+
+alloy-metrics:
+  enabled: true

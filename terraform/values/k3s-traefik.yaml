@@ -2,6 +2,8 @@ deployment:
   podAnnotations:
     prometheus.io/port: "8082"
     prometheus.io/scrape: "true"
+  replicas: 2
+
 global:
   systemDefaultRegistry: ""
 image:
@@ -26,5 +28,9 @@ tolerations:
 
 metrics:
   prometheus:
+    addEntryPointsLabels: true
+    addRoutersLabels: true
+    addServicesLabels: true
     serviceMonitor:
       enabled: true
+      honorLabels: true
