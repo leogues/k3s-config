@@ -1,3 +1,6 @@
+common: &lokiNodes
+  logging: "true"
+
 global:
   extraEnvFrom:
     - secretRef:
@@ -5,7 +8,7 @@ global:
   extraArgs:
     - "-config.expand-env=true"
 
-deploymentMode: Distributed
+deploymentMode: SimpleScalable
 
 loki:
   schemaConfig:
@@ -52,50 +55,51 @@ loki:
         endpoint: "88637849b2895815e424609442014ce3.r2.cloudflarestorage.com"
         access_key_id: "${R2_ACCESS_KEY_ID}"
         secret_access_key: "${R2_SECRET_ACCESS_KEY}"
-  # storage:
-  #   type: s3
-  #   bucketNames:
-  #     chunks: "loki-chunks"
-  #   s3:
-  #     endpoint: "https://88637849b2895815e424609442014ce3.r2.cloudflarestorage.com"
-  #     accessKeyId: "${R2_ACCESS_KEY_ID}"
-  #     secretAccessKey: "${R2_SECRET_ACCESS_KEY}"
 
-ingester:
+# ingester:
+#   replicas: 1
+#   zoneAwareReplication:
+#     enabled: false
+
+# querier:
+#   replicas: 1
+
+# queryFrontend:
+#   replicas: 1
+
+# queryScheduler:
+#   replicas: 1
+
+# distributor:
+#   replicas: 1
+
+# compactor:
+#   replicas: 1
+
+# indexGateway:
+#   replicas: 1
+
+# ruler:
+#   enabled: false
+
+gateway:
+  nodeSelector: *lokiNodes
   replicas: 1
-  zoneAwareReplication:
-    enabled: false
 
-querier:
-  replicas: 1
-
-queryFrontend:
-  replicas: 1
-
-queryScheduler:
-  replicas: 1
-
-distributor:
-  replicas: 1
-
-compactor:
-  replicas: 1
-
-indexGateway:
-  replicas: 1
-
-ruler:
-  enabled: false
+resultsCache:
+  nodeSelector: *lokiNodes
+  allocatedMemory: 1024
 
 chunksCache:
-  allocatedMemory: 3072
+  nodeSelector: *lokiNodes
+  allocatedMemory: 2048
 
 backend:
-  replicas: 0
+  nodeSelector: *lokiNodes
+  replicas: 1
 read:
-  replicas: 0
+  nodeSelector: *lokiNodes
+  replicas: 1
 write:
-  replicas: 0
-
-singleBinary:
-  replicas: 0
+  nodeSelector: *lokiNodes
+  replicas: 1
