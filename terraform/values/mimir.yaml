@@ -69,7 +69,7 @@ minio:
 metaMonitoring:
   dashboards:
     enabled: true
-  annotations:
-    grafana_folder: "Mimir"
+    annotations:
+      grafana_folder: "Mimir"
   serviceMonitor:
     enabled: true

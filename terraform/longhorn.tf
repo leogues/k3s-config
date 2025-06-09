@@ -6,4 +6,6 @@ resource "helm_release" "longhorn" {
   repository = "https://charts.longhorn.io"
   chart      = "longhorn"
   version    = "1.9.0"
+
+  values = [file("values/longhorn.yaml")]
 }

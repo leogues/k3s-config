@@ -1,0 +1,81 @@
+global:
+  extraEnvFrom:
+    - secretRef:
+        name: s3-credentials
+
+deploymentMode: Distributed
+
+loki:
+  structuredConfig:
+    memberlist:
+      cluster_label: "loki"
+      cluster_label_verification_disabled: false
+    server:
+      log_level: info
+
+  storage:
+    bucketNames:
+      chunks: "loki"
+    use_thanos_objstore: true
+    object_store:
+      type: s3
+      s3:
+        bucket_name: "loki"
+        endpoint: "88637849b2895815e424609442014ce3.r2.cloudflarestorage.com"
+        access_key_id: "todinho"
+        secret_access_key: "gelado"
+
+  schemaConfig:
+    configs:
+      - from: "2025-06-08"
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+
+write:
+  replicas: 0
+read:
+  replicas: 0
+backend:
+  replicas: 0
+
+chunksCache:
+  allocatedMemory: 3072
+ingester:
+  replicas: 2
+  zoneAwareReplication:
+    enabled: false
+  persistentVolume:
+    enabled: true
+    claims:
+      - name: loki-ingester
+        size: 5Gi
+distributor:
+  replicas: 1
+compactor:
+  replicas: 1
+querier:
+  replicas: 1
+query_frontend:
+  replicas: 1
+query_scheduler:
+  replicas: 1
+indexGateway:
+  replicas: 1
+rollout_operator:
+  enabled: false
+ruler:
+  enabled: false
+minio:
+  enabled: false
+
+monitoring:
+  dashboards:
+    enabled: true
+    annotations:
+      grafana_folder: "Loki"
+  serviceMonitor:
+    enabled: true
