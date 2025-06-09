@@ -23,7 +23,7 @@ mimir:
       backend: s3
       s3:
         endpoint: "88637849b2895815e424609442014ce3.r2.cloudflarestorage.com"
-        access_key_id:  "${R2_ACCESS_KEY_ID}"
+        access_key_id: "${R2_ACCESS_KEY_ID}"
         secret_access_key: "${R2_SECRET_ACCESS_KEY}"
         bucket_name: "mimir"
     compactor:

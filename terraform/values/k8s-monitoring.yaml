@@ -6,6 +6,10 @@ destinations:
     type: prometheus
     url: http://mimir-nginx.monitoring.svc/api/v1/push
 
+  - name: loki
+    type: loki
+    url: http://loki-gateway.monitoring.svc/loki/api/v1/push
+
 clusterMetrics:
   enabled: true
   destinations:
@@ -18,5 +22,15 @@ prometheusOperatorObjects:
   crds:
     deploy: true
 
+podLogs:
+  enabled: true
+  destinations:
+    - loki
+
 alloy-metrics:
   enabled: true
+
+alloy-logs:
+  enabled: true
+  nodeSelector:
+    logging: "true"

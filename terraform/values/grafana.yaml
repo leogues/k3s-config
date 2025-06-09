@@ -20,6 +20,13 @@ datasources:
           tlsSkipVerify: true
           timeInterval: 30s
 
+      - name: Loki
+        uid: loki
+        type: loki
+        access: proxy
+        isDefault: false
+        url: http://loki-gateway.monitoring.svc
+
 sidecar:
   dashboards:
     enabled: true

@@ -11,6 +11,7 @@ global:
 deploymentMode: SimpleScalable
 
 loki:
+  auth_enabled: false
   schemaConfig:
     configs:
       - from: "2024-04-01"
@@ -102,4 +103,13 @@ read:
   replicas: 1
 write:
   nodeSelector: *lokiNodes
-  replicas: 1
+  replicas: 2
+  affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/component: write
+          topologyKey: kubernetes.io/hostname
